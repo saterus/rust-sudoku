@@ -9,5 +9,5 @@ fn main() {
     println!("known: {:?}, guess: {:?}", known, guess);
 
     let board = Board::new();
-    println!("board: {:?}", board);
+    println!("board:\n{:?}", board);
 }

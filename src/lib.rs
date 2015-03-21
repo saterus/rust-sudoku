@@ -1,7 +1,11 @@
-#[derive(Debug)]
+use std::fmt::Debug;
+use std::fmt::Error;
+use std::fmt::Formatter;
+
 pub struct Board {
     pub squares: Vec<Square>,
-    pub size: u8,
+    pub size: usize,
+    pub root: usize,
 }
 
 impl Board {
@@ -13,12 +17,39 @@ impl Board {
 
         Board {
             squares: sqs,
-            size: 9
+            size: 9,
+            root: 3,
+        }
+    }
+
         }
     }
 }
 
-#[derive(Debug)]
+impl Debug for Board {
+    fn fmt(&self, f: &mut Formatter) -> Result<(), Error> {
+        let root = self.root;
+        let mut sqs = self.squares.iter();
+        for y_chunk in (0..root) {
+            for _ in (0..root) {
+                for x_chunk in (0..root) {
+                    for _ in (0..root) {
+                        try!(write!(f, "{:?}", sqs.next().unwrap()))
+                    }
+                    if x_chunk < root - 1 {
+                        try!(write!(f, "|", ))
+                    }
+                }
+                try!(write!(f, "\n" ))
+            }
+            if y_chunk < root - 1 {
+                try!(write!(f, "===+===+===\n" ))
+            }
+        }
+        Ok(())
+    }
+}
+
 pub enum Square {
     Known(u8),
     Guess(Vec<u8>),
@@ -34,4 +65,18 @@ impl Square {
         Square::Known(val)
     }
 
+}
+
+impl Debug for Square {
+    fn fmt(&self, f: &mut Formatter) -> Result<(), Error> {
+        match self {
+            &Square::Known(ref val) => {
+                write!(f, "{:?}", *val)
+            },
+            &Square::Guess(_) => {
+                write!(f, "-" )
+            },
+        }
+
+    }
 }
