@@ -22,6 +22,23 @@ impl Board {
         }
     }
 
+
+    pub fn parse(serialized_board: String) -> Board {
+        let mut initial = serialized_board.chars();
+        let mut sqs = Vec::with_capacity(81);
+        for _ in 0..81 {
+            let sq = match initial.next() {
+                Some('-') => { Square::new() },
+                Some(val) => { Square::known(val.to_digit(10).unwrap() as u8) },
+                None => { Square::new() },
+            };
+            sqs.push(sq);
+        }
+
+        Board {
+            squares: sqs,
+            size: 9,
+            root: 3,
         }
     }
 }
