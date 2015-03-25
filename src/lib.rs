@@ -2,6 +2,10 @@ use std::fmt::Debug;
 use std::fmt::Error;
 use std::fmt::Formatter;
 
+mod util;
+
+use util::square_root;
+
 pub struct Board {
     pub squares: Vec<Square>,
     pub size: usize,
@@ -9,24 +13,30 @@ pub struct Board {
 }
 
 impl Board {
-    pub fn new() -> Board {
-        let mut sqs = Vec::with_capacity(81);
-        for _ in 0..81 {
+
+    pub fn new(size: usize) -> Board {
+        let root = square_root(size);
+        let mut sqs = Vec::with_capacity(size * size);
+        for _ in 0..(size * size) {
             sqs.push(Square::new());
         }
 
         Board {
             squares: sqs,
-            size: 9,
-            root: 3,
+            size: size,
+            root: root,
         }
     }
 
 
     pub fn parse(serialized_board: String) -> Board {
+        let total_squares = serialized_board.len();
+        let size = square_root(total_squares);
+        let root = square_root(size);
+
         let mut initial = serialized_board.chars();
-        let mut sqs = Vec::with_capacity(81);
-        for _ in 0..81 {
+        let mut sqs = Vec::with_capacity(total_squares);
+        for _ in 0..(total_squares) {
             let sq = match initial.next() {
                 Some('-') => { Square::new() },
                 Some(val) => { Square::known(val.to_digit(10).unwrap() as u8) },
@@ -37,10 +47,15 @@ impl Board {
 
         Board {
             squares: sqs,
-            size: 9,
-            root: 3,
+            size: size,
+            root: root,
         }
     }
+
+    pub fn total_squares(&self) -> usize {
+        return self.size * self.size;
+    }
+
 }
 
 impl Debug for Board {
