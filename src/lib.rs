@@ -1,6 +1,7 @@
 #![feature(plugin)]
 #![plugin(regex_macros)]
 extern crate regex;
+#[allow(plugin_as_library)]
 extern crate regex_macros;
 
 use std::fmt::Debug;
@@ -8,6 +9,7 @@ use std::fmt::Error;
 use std::fmt::Formatter;
 
 pub mod puzzle_loader;
+pub mod each_slice;
 mod util;
 
 use util::square_root;
