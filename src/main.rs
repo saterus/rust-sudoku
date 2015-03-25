@@ -1,17 +1,16 @@
 extern crate sudoku;
 
+use std::env;
+use std::path::Path;
+
 use sudoku::Board;
 use sudoku::Square;
 
+use sudoku::puzzle_loader;
+
 fn main() {
-    let known = Square::known(4);
-    let guess = Square::new();
-    println!("known: {:?}, guess: {:?}", known, guess);
-
-    let board = Board::new();
-    println!("board:\n{:?}", board);
-
-    let b1_str = "--1------5------9-----------------------------7----------------------------------".to_string();;
-    let b1 = Board::parse(b1_str);
-    println!("b1:\n{:?}", b1);
+    let puzzle_path = env::args().nth(1).expect("Must pass a path to a puzzle file as first argument!");
+    let board = puzzle_loader::load(&puzzle_path);
+    println!("board size: {:?}", board.total_squares());
+    println!("\n\n{:?}", board);
 }
