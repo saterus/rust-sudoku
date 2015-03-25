@@ -5,7 +5,6 @@ use std::env;
 use sudoku::puzzle_loader;
 use sudoku::each_slice::EachSlice;
 
-#[allow(dead_code)]
 fn main() {
 
     let v = vec![1i32,2,3,4,5,6,7,8,9,10];

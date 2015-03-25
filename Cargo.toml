@@ -4,6 +4,13 @@ name = "sudoku"
 version = "0.0.1"
 authors = ["Alex Burkhart <saterus@gmail.com>"]
 
+[[bin]]
+
+name = "sudoku_runner"
+test = false
+doc = false
+
 [dependencies]
+
 regex = "0.1.8"
 regex_macros = "0.1.12"
