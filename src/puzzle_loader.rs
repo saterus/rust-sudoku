@@ -1,6 +1,5 @@
 use std::fs::File;
 use std::io::Read;
-use std::path::Path;
 use regex::Regex;
 
 use Board;
@@ -13,7 +12,7 @@ pub fn load(puzzle_path: &String) -> Board {
     let mut string_buffer = String::new();
     puzzle_file.read_to_string(&mut string_buffer).ok().expect("Error reading puzzle file!");
 
-    let board_string = BOARD_REGEX.replace_all(string_buffer.as_slice(), "");
+    let board_string = BOARD_REGEX.replace_all(&string_buffer[..], "");
     println!("Parsed board as: {:?}", board_string);
 
     Board::parse(board_string)

@@ -1,10 +1,6 @@
 extern crate sudoku;
 
 use std::env;
-use std::path::Path;
-
-use sudoku::Board;
-use sudoku::Square;
 
 use sudoku::puzzle_loader;
 use sudoku::each_slice::EachSlice;

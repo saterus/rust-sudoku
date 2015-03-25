@@ -67,6 +67,7 @@ pub trait EachSlice: Iterator {
 }
 
 mod tests {
+    #[allow(unused_imports)]
     use super::EachSlice;
 
     #[test]
